@@ -22,3 +22,9 @@ await new HttpClient().GetStringAsync("https://ron-swanson-quotes.herokuapp.com/
 
 app.Run();
 
+class Tarefa
+{
+    public int Id { get; set; }
+    public string? Name { get; set; }
+    public bool IsConcluida { get; set; }
+}
