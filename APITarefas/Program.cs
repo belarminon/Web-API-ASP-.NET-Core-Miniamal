@@ -22,12 +22,15 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/", () => "Olá mundo");
 
 app.MapGet("frases", async () =>
-await new HttpClient().GetStringAsync("https://ron-swanson-quotes.herokuapp.com/v2/quotes")
-);
+await new HttpClient().GetStringAsync("https://ron-swanson-quotes.herokuapp.com/v2/quotes"));
 
-app.MapGet("/tarefas", async (AppDbContext db) =>
+app.MapGet("/tarefas", async (AppDbContext db) => await db.Tarefas.ToListAsync());
+
+app.MapPost("/tarefas", async (Tarefa tarefa, AppDbContext db) =>
 {
-    return await db.Tarefas.ToListAsync();
+    db.Tarefas.Add(tarefa);
+    await db.SaveChangesAsync();
+    return Results.Created($"/tarefas/{tarefa.Id}", tarefa);
 });
 
 app.Run();
