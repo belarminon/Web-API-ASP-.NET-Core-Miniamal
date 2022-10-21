@@ -16,5 +16,9 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/", () => "Olá mundo");
 
+app.MapGet("frases", async () =>
+await new HttpClient().GetStringAsync("https://ron-swanson-quotes.herokuapp.com/v2/quotes")
+);
+
 app.Run();
 
